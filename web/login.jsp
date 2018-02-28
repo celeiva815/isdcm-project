@@ -12,6 +12,21 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Registro usuarios</h1>
+        
+        <form action="action">
+            <p> Nombre: </p>
+            <input name="name"/>
+            <p> Apellidos: </p>
+            <input name="last_names"/>
+            <p> Correo Electrónico: </p>
+            <input name="email"/>
+            <input name="username"/>
+            <input name="password"/>            
+            <input name="repeat_password"/>
+
+
+            
+        </form>
     </body>
 </html>
