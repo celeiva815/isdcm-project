@@ -36,20 +36,9 @@ import models.Videos;
 @WebServlet(name = "VideoRegistration", urlPatterns = {"/VideoRegistration"})
 public class VideoRegistration extends HttpServlet {
     
-        private EntityManagerFactory emf;
-
-        
-        private EntityManager getEntityManager() {
-
-        if (emf == null) {
-
-            emf = Persistence.createEntityManagerFactory("VideoManagerPU");
-        }
-
-        return emf.createEntityManager();
-
-    }
-        
+    protected Videos createdVideo;
+    
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,7 +51,6 @@ public class VideoRegistration extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         
         try  {
            
@@ -73,12 +61,11 @@ public class VideoRegistration extends HttpServlet {
             String format = request.getParameter("format");
             
             Videos video = createVideo(title, author, duration, description, format);
-            Videos createdVideo = addVideo(video, MySqlConnector.getInstance().getConnection());
+            createdVideo = addVideo(video, MySqlConnector.getInstance().getConnection());
             
-            out.println("Video fue agregado? " + createdVideo.getId());
         }
         catch(Exception e) {
-            
+            PrintWriter out = response.getWriter();
             out.println(e.getMessage());
             
         }
@@ -207,6 +194,20 @@ public class VideoRegistration extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        if (createdVideo != null) {
+        
+            request.setAttribute("id", createdVideo.getId());
+            request.setAttribute("title", createdVideo.getTitle());
+            request.setAttribute("author", createdVideo.getAuthor());
+            request.setAttribute("description", createdVideo.getDescription());
+            request.setAttribute("createdat", createdVideo.getCreatedAt());
+            request.setAttribute("reproductions", createdVideo.getReproductions());
+            request.setAttribute("duration", createdVideo.getDuration());
+            request.setAttribute("format", createdVideo.getFormat());
+            request.setAttribute("userid", createdVideo.getUserId());
+            request.getRequestDispatcher("/video_view.jsp").forward(request, response);
+        }
     }
 
     /**
