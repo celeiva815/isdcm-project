@@ -7,7 +7,18 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,7 +27,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Video;
+import models.Videos;
 
 /**
  *
@@ -24,7 +35,21 @@ import models.Video;
  */
 @WebServlet(name = "VideoRegistration", urlPatterns = {"/VideoRegistration"})
 public class VideoRegistration extends HttpServlet {
+    
+        private EntityManagerFactory emf;
 
+        
+        private EntityManager getEntityManager() {
+
+        if (emf == null) {
+
+            emf = Persistence.createEntityManagerFactory("VideoManagerPU");
+        }
+
+        return emf.createEntityManager();
+
+    }
+        
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,15 +68,14 @@ public class VideoRegistration extends HttpServlet {
            
             String title = request.getParameter("title");
             String author = request.getParameter("author");          
-            String duration = request.getParameter("duration");
+            int duration = Integer.parseInt(request.getParameter("duration"));
             String description = request.getParameter("description");
             String format = request.getParameter("format");
             
-            out.println("llegó");
+            Videos video = createVideo(title, author, duration, description, format);
+            Videos createdVideo = addVideo(video, MySqlConnector.getInstance().getConnection());
             
-            createVideo(title, author, duration, description, format);
-            
-            out.println("Paso el create");
+            out.println("Video fue agregado? " + createdVideo.getId());
         }
         catch(Exception e) {
             
@@ -60,10 +84,11 @@ public class VideoRegistration extends HttpServlet {
         }
     }
     
-    public void createVideo(String title, String author, String duration, String description, String format) {
+    public Videos createVideo(String title, String author, int duration, String description, String format) {
     
-        Video video = new Video();
+        Videos video = new Videos();
         
+        video.setUserId(1);
         video.setTitle(title);
         video.setAuthor(author);
         video.setDescription(description);
@@ -72,14 +97,88 @@ public class VideoRegistration extends HttpServlet {
         
         Date date = new Date();
         
-        video.setCreationDate(date.toString());
+        video.setCreatedAt(date);
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("VideoManagerPU");
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        em.persist(video);
-        em.getTransaction().commit();
+        return video;
     }
+       
+    public Videos addVideo(Videos video, Connection connection) {
+        
+         String sql = "INSERT INTO videos(TITLE,AUTHOR,CREATED_AT,DURATION,REPRODUCTIONS,DESCRIPTION,FORMAT,USER_ID) "
+                 + "VALUES (?,?,?,?,?,?,?,?)";
+ 
+        try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, video.getTitle());
+            pstmt.setString(2, video.getAuthor());
+            pstmt.setString(3, formatDate(video.getCreatedAt()));
+            pstmt.setInt(4, video.getDuration());
+            pstmt.setInt(5, 0);
+            pstmt.setString(6, video.getDescription());
+            pstmt.setString(7, video.getFormat());            
+            pstmt.setInt(8, video.getUserId());
+
+            pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            
+            if(rs.next())
+            {
+                int lastInsertedId = rs.getInt(1);
+                Videos createdVideo = getVideo(lastInsertedId);
+
+                return createdVideo;
+            }
+
+            return null;
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return null;
+    }
+
+    private String formatDate(Date date) {
+        
+        // Create an instance of SimpleDateFormat used for formatting 
+        // the string representation of date (month/day/year)
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        // Using DateFormat format method we can create a string 
+        // representation of a date with the defined format.
+        return df.format(date);
+    }
+    
+    public Videos getVideo(int id) {
+
+        Videos video = new Videos();
+        Connection connection = MySqlConnector.getInstance().getConnection();
+        
+        String sql = "Select * from videos where id = " + id  ;
+ 
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery(sql);
+            
+        while (rs.next()) {
+            video.setId(rs.getInt("ID"));
+            video.setTitle(rs.getString("TITLE"));
+            video.setAuthor(rs.getString("AUTHOR"));
+            video.setDescription(rs.getString("DESCRIPTION"));
+            video.setCreatedAt(rs.getDate("CREATED_AT"));
+            video.setReproductions(rs.getInt("REPRODUCTIONS"));
+            video.setDuration(rs.getInt("DURATION"));
+            video.setFormat(rs.getString("FORMAT"));
+            video.setUserId(rs.getInt("USER_ID"));
+        }
+            
+            return video;
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return null;
+    }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -6,15 +6,17 @@
 package models;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,45 +32,58 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Videos.findById", query = "SELECT v FROM Videos v WHERE v.id = :id")
     , @NamedQuery(name = "Videos.findByTitle", query = "SELECT v FROM Videos v WHERE v.title = :title")
     , @NamedQuery(name = "Videos.findByAuthor", query = "SELECT v FROM Videos v WHERE v.author = :author")
-    , @NamedQuery(name = "Videos.findByCreationDate", query = "SELECT v FROM Videos v WHERE v.creationDate = :creationDate")
-    , @NamedQuery(name = "Videos.findByDuration", query = "SELECT v FROM Videos v WHERE v.duration = :duration")
-    , @NamedQuery(name = "Videos.findByReproductions", query = "SELECT v FROM Videos v WHERE v.reproductions = :reproductions")
     , @NamedQuery(name = "Videos.findByDescription", query = "SELECT v FROM Videos v WHERE v.description = :description")
-    , @NamedQuery(name = "Videos.findByFormat", query = "SELECT v FROM Videos v WHERE v.format = :format")})
-public class Video implements Serializable {
+    , @NamedQuery(name = "Videos.findByCreatedAt", query = "SELECT v FROM Videos v WHERE v.createdAt = :createdAt")
+    , @NamedQuery(name = "Videos.findByReproductions", query = "SELECT v FROM Videos v WHERE v.reproductions = :reproductions")
+    , @NamedQuery(name = "Videos.findByDuration", query = "SELECT v FROM Videos v WHERE v.duration = :duration")
+    , @NamedQuery(name = "Videos.findByFormat", query = "SELECT v FROM Videos v WHERE v.format = :format")
+    , @NamedQuery(name = "Videos.findByUserId", query = "SELECT v FROM Videos v WHERE v.userId = :userId")
+    , @NamedQuery(name = "Videos.findByVideoscol", query = "SELECT v FROM Videos v WHERE v.videoscol = :videoscol")})
+public class Videos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID", nullable = false)
+    @NotNull
+    @Column(name = "id")
     private Integer id;
     @Size(max = 255)
-    @Column(name = "TITLE", length = 255)
+    @Column(name = "title")
     private String title;
     @Size(max = 255)
-    @Column(name = "AUTHOR", length = 255)
+    @Column(name = "author")
     private String author;
-    @Size(max = 100)
-    @Column(name = "CREATION_DATE", length = 100)
-    private String creationDate;
-    @Size(max = 100)
-    @Column(name = "DURATION", length = 100)
-    private String duration;
-    @Column(name = "REPRODUCTIONS")
-    private Integer reproductions;
     @Size(max = 255)
-    @Column(name = "DESCRIPTION", length = 255)
+    @Column(name = "description")
     private String description;
-    @Size(max = 20)
-    @Column(name = "FORMAT", length = 20)
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+    @Column(name = "reproductions")
+    private Integer reproductions;
+    @Column(name = "duration")
+    private Integer duration;
+    @Size(max = 255)
+    @Column(name = "format")
     private String format;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "user_id")
+    private int userId;
+    @Size(max = 45)
+    @Column(name = "videoscol")
+    private String videoscol;
 
-    public Video() {
+    public Videos() {
     }
 
-    public Video(Integer id) {
+    public Videos(Integer id) {
         this.id = id;
+    }
+
+    public Videos(Integer id, int userId) {
+        this.id = id;
+        this.userId = userId;
     }
 
     public Integer getId() {
@@ -95,20 +110,20 @@ public class Video implements Serializable {
         this.author = author;
     }
 
-    public String getCreationDate() {
-        return creationDate;
+    public String getDescription() {
+        return description;
     }
 
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getDuration() {
-        return duration;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Integer getReproductions() {
@@ -119,12 +134,12 @@ public class Video implements Serializable {
         this.reproductions = reproductions;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public String getFormat() {
@@ -133,6 +148,22 @@ public class Video implements Serializable {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getVideoscol() {
+        return videoscol;
+    }
+
+    public void setVideoscol(String videoscol) {
+        this.videoscol = videoscol;
     }
 
     @Override
@@ -145,10 +176,10 @@ public class Video implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Video)) {
+        if (!(object instanceof Videos)) {
             return false;
         }
-        Video other = (Video) object;
+        Videos other = (Videos) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
