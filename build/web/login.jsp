@@ -9,29 +9,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                <script src="https://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
+        <script src="https://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
         <link rel="stylesheet" href="css/style.css">
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="js/index.js"></script>
-        <title>JSP Page</title>
+        <title>Inicio de sesión</title>
     </head>
     <body>
-        <h1>Registro usuarios</h1>
+
+         <h1>Iniciar Sesión</h1>
         
-        <form action="action">
-            <p> Nombre: </p>
-            <input name="name"/>
-            <p> Apellidos: </p>
-            <input name="last_names"/>
-            <p> Correo Electrónico: </p>
-            <input name="email"/>
-            <input name="username"/>
-            <input name="password"/>            
-            <input name="repeat_password"/>
-
-
-            
+        <form name="log_in" action="LogIn" method="POST">
+            <p>Usuario: </p>
+            <input name="username" value="tito"/>
+            <p> Contraseña: </p>
+            <input type="password" name="password" value="1234"/>            
+            <p></p>
+            <input value="Ingresar" type="submit"/>
         </form>
     </body>
 </html>

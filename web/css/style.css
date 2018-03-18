@@ -46,7 +46,20 @@
   }
 }
 
-button {
+span.link-text {
+    
+    margin-left: 5px;
+}
+
+ul {
+      list-style-type: none;
+}
+
+li {
+    margin-bottom: 30px;
+}
+
+button, a.link {
   outline: none;
   background: #34495E;
   width: 100%;
@@ -61,6 +74,12 @@ button {
   cursor: pointer;
 }
 
+a.link {
+    color: #eee;
+    text-transform: capitalize;
+}
+
+
 button, input {
     outline: none;
     border: 0;
@@ -69,6 +88,10 @@ button, input {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+}
+
+a {
+    text-decoration: none;
 }
 
 body {

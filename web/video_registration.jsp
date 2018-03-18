@@ -32,8 +32,8 @@
             <input type="text" name="description"/>
             <p>Formato:</p>
             <input type="text" name="format"/>
-            <br/>
-            <input text="Registrar" type="submit"/>
+            <p></p>
+            <input value="Agregar video" type="submit"/>
         </form>
     </body>
 </html>
