@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="css/style.css">
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="js/index.js"></script>
+        <script src="js/user.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
         <title>Registrar Usuario</title>
@@ -22,7 +23,7 @@
         
         <h1>Registrar nuevo Usuario</h1>
         
-        <form name="register_user" action="RegisterUser" method="POST">
+        <form name="register_user" onsubmit="return validateForm()" action="RegisterUser" method="POST">
             <p> Nombre de Usuario: </p>
             <input name="username"/>
             <p> Nombre: </p>
@@ -32,9 +33,9 @@
             <p> Correo Electrónico: </p>
             <input name="email"/>
             <p> Contraseña: </p>
-            <input name="password"/>            
+            <input name="password" type="password" id="password"/>            
             <p> Repetir contraseña: </p>
-            <input name="repeat_password"/>
+            <input name="confirm_password" type="password" id="confirm_password"/>
             <p></p>
             <input value="Registrar Usuario" type="submit" class="link"/>
         </form>
