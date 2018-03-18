@@ -33,8 +33,8 @@ import models.Videos;
  *
  * @author Tito
  */
-@WebServlet(name = "VideoRegistration", urlPatterns = {"/VideoRegistration"})
-public class VideoRegistration extends HttpServlet {
+@WebServlet(name = "UploadVideo", urlPatterns = {"/UploadVideo"})
+public class UploadVideo extends HttpServlet {
     
     protected Videos createdVideo;
     

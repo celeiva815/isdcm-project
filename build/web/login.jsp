@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="css/style.css">
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="js/index.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
         <title>Inicio de sesión</title>
     </head>
     <body>
@@ -26,7 +28,17 @@
             <p> Contraseña: </p>
             <input type="password" name="password" value="1234"/>            
             <p></p>
-            <input value="Ingresar" type="submit"/>
+            <input value="Ingresar" type="submit" class="link"/>
         </form>
+         
+        <p class="separator">
+            ¿Nuevo usuario?
+        </p>
+        <a href="/VideoManager/user_registration.jsp" class="link">
+            <span>
+                <i class="fas fa-user-plus"></i>
+            </span>
+            <span class="link-text">Registrar Usuario</span>
+        </a>
     </body>
 </html>

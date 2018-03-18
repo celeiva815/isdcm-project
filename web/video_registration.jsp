@@ -14,13 +14,14 @@
         <link rel="stylesheet" href="css/style.css">
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
         <script src="js/index.js"></script>
-        
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
         <title>Registrar video</title>
     </head>
     <body>
         <h1>Agrega un nuevo video</h1>
         
-        <form name="register_video" action="VideoRegistration" method="POST">
+        <form name="register_video" action="UploadVideo" method="POST">
             
             <p>Título:</p>
             <input type="text" name="title"/>
@@ -33,7 +34,7 @@
             <p>Formato:</p>
             <input type="text" name="format"/>
             <p></p>
-            <input value="Agregar video" type="submit"/>
+            <input value="Subir Video" type="submit" class="link"/>
         </form>
     </body>
 </html>

@@ -52,14 +52,15 @@ span.link-text {
 }
 
 ul {
-      list-style-type: none;
+    list-style-type: none;
+    margin-top: 30px;
 }
 
 li {
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
-button, a.link {
+button, .link {
   outline: none;
   background: #34495E;
   width: 100%;
@@ -74,9 +75,10 @@ button, a.link {
   cursor: pointer;
 }
 
-a.link {
+.link {
     color: #eee;
     text-transform: capitalize;
+    width: fit-content
 }
 
 
@@ -128,4 +130,9 @@ h1 {
 }
 .rwd-table th, .rwd-table td:before {
   color: #dd5;
+}
+
+.separator {
+    margin-top: 60px;
+    margin-bottom: 25px;
 }
