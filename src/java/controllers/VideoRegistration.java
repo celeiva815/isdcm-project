@@ -150,7 +150,7 @@ public class VideoRegistration extends HttpServlet {
             video.setTitle(rs.getString("TITLE"));
             video.setAuthor(rs.getString("AUTHOR"));
             video.setDescription(rs.getString("DESCRIPTION"));
-            video.setCreatedAt(rs.getDate("CREATED_AT"));
+            video.setCreatedAt(rs.getDate("CREATED_AT"));  
             video.setReproductions(rs.getInt("REPRODUCTIONS"));
             video.setDuration(rs.getInt("DURATION"));
             video.setFormat(rs.getString("FORMAT"));

@@ -7,18 +7,12 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,9 +53,38 @@ public class ShowVideos extends HttpServlet {
         }
     }
     
-    public Videos[] getVideos() {
+    public ArrayList<Videos> getVideos(int userId) {
 
-        return null;
+        ArrayList<Videos> videos = new ArrayList<>();
+        Connection connection = MySqlConnector.getInstance().getConnection();
+        
+        String sql = "Select * from videos where user_id = " + userId  ;
+ 
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            ResultSet rs = pstmt.executeQuery(sql);
+            
+            while (rs.next()) {
+
+                Videos video = new Videos();
+
+                video.setId(rs.getInt("ID"));
+                video.setTitle(rs.getString("TITLE"));
+                video.setAuthor(rs.getString("AUTHOR"));
+                video.setDescription(rs.getString("DESCRIPTION"));
+                video.setCreatedAt(rs.getDate("CREATED_AT"));
+                video.setReproductions(rs.getInt("REPRODUCTIONS"));
+                video.setDuration(rs.getInt("DURATION"));
+                video.setFormat(rs.getString("FORMAT"));
+                video.setUserId(rs.getInt("USER_ID"));
+                
+                videos.add(video);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return videos;
     }
     
 
@@ -78,6 +101,14 @@ public class ShowVideos extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        ArrayList<Videos> videos = getVideos(1);
+        
+        if (videos.size() > 0) {
+            
+            request.setAttribute("videos", videos);
+            request.getRequestDispatcher("/video_list.jsp").forward(request, response);
+        }
     }
 
     /**
