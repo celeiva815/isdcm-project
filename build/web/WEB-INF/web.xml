@@ -16,6 +16,10 @@
     <welcome-file-list>
         <welcome-file>user/index.html</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>jdbc-realm-video</realm-name>

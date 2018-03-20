@@ -21,7 +21,7 @@ import utils.CookieHelper;
  *
  * @author Tito
  */
-@WebServlet(name = "CloseSession", urlPatterns = {"/CloseSession"})
+@WebServlet(name = "CloseSession", urlPatterns = {"/user/CloseSession"})
 public class CloseSession extends HttpServlet {
 
     /**

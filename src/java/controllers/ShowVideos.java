@@ -27,7 +27,7 @@ import models.Videos;
  *
  * @author Tito
  */
-@WebServlet(name = "ShowVideos", urlPatterns = {"/ShowVideos"})
+@WebServlet(name = "ShowVideos", urlPatterns = {"/user/ShowVideos"})
 public class ShowVideos extends HttpServlet {
     
          
