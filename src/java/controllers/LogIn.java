@@ -5,19 +5,25 @@
  */
 package controllers;
 
+import utils.MySqlConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.UUID;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.UserDAO;
 import models.Users;
+import utils.CookieHelper;
 
 /**
  *
@@ -25,7 +31,7 @@ import models.Users;
  */
 @WebServlet(name = "LogIn", urlPatterns = {"/LogIn"})
 public class LogIn extends HttpServlet {
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,28 +44,7 @@ public class LogIn extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
-        try {
- 
-            String username = request.getParameter("username");
-            String password = request.getParameter("password"); 
-
-            Users user = logInUser(username, password);
-            
-            if (user == null || !user.getPassword().equals(password)) {
-                
-                request.getRequestDispatcher("/log_in.jsp").forward(request, response);
-            
-            } else {
-                
-                request.getRequestDispatcher("/index.html").forward(request, response);
-                
-            }
-        }
-        catch(Exception e) {
-            request.getRequestDispatcher("/log_in.jsp").forward(request, response);
-        }
+       
     }
 
     private Users logInUser(String username, String password) {
@@ -78,7 +63,7 @@ public class LogIn extends HttpServlet {
                 
                 user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
-                user.setLastNames(rs.getString("last_names"));
+                user.setLastNames(rs.getString("lastnames"));
                 user.setUsername(rs.getString("username"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
@@ -105,7 +90,9 @@ public class LogIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        
     }
 
     /**
@@ -119,7 +106,47 @@ public class LogIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        try {
+ 
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String remember = request.getParameter("remember");
+            boolean isRemembered = remember != null ? remember.equals("true") : false;  
+
+            Users user = logInUser(username, password);
+            
+            if (user == null) {
+                
+                request.setAttribute("error", "El usuario ingresado no existe.");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            
+            } else if (!user.getPassword().equals(password)) {
+                
+                request.setAttribute("error", "La contraseña ingresada no es la correcta.");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+                
+            } else {
+                
+                request.getSession().setAttribute("user", user);
+                
+                 if (isRemembered) {
+                    String uuid = UUID.randomUUID().toString();
+                    UserDAO.getInstance().saveUserUUID(user, uuid);
+                     CookieHelper.addCookie(response, CookieHelper.COOKIE_NAME, uuid, CookieHelper.COOKIE_AGE);
+                } else {
+                    UserDAO.getInstance().deleteUserUUID(user);
+                    CookieHelper.removeCookie(response, CookieHelper.COOKIE_NAME);
+                }
+                
+                response.sendRedirect("/VideoManager/user/index.html");
+            }
+        }
+        catch(Exception e) {
+            
+            request.setAttribute("error", "Hubo un error inesperado");
+            doGet(request, response);
+        }
     }
 
     /**
@@ -132,4 +159,9 @@ public class LogIn extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    
+    
+    
+    
+    
 }

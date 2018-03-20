@@ -38,6 +38,14 @@
             <input name="confirm_password" type="password" id="confirm_password"/>
             <p></p>
             <input value="Registrar Usuario" type="submit" class="link"/>
+            
+            <p class="separator">
+                ¿Ya eres usuario?
+            </p>
+            <a href="/VideoManager/login.jsp" class="link new-user">
+                <span><i class="fas fa-user"></i></span>
+                <span class="link-text">Iniciar Sesión</span>
+            </a>
         </form>
     </body>
 </html>

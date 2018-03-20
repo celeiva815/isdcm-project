@@ -46,6 +46,11 @@
   }
 }
 
+.login-error {
+    color: #C91D2E;
+    font-weight: bold;
+}
+
 span.link-text {
     
     margin-left: 5px;
@@ -136,3 +141,9 @@ h1 {
     margin-top: 60px;
     margin-bottom: 25px;
 }
+
+.text-checkbox {
+    margin-left: 10px;
+}
+
+

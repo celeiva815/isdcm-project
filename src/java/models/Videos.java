@@ -153,6 +153,10 @@ public class Videos implements Serializable {
     public int getUserId() {
         return userId;
     }
+    
+    public Users getUser() {
+        return UserDAO.getInstance().findUserById(userId);
+    }
 
     public void setUserId(int userId) {
         this.userId = userId;

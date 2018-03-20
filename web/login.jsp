@@ -24,13 +24,17 @@
         
         <form name="log_in" action="LogIn" method="POST">
             <p>Usuario: </p>
-            <input name="username" value="tito"/>
+            <input name="username"/>
             <p> Contraseña: </p>
-            <input type="password" name="password" value="1234"/>            
+            <input type="password" name="password"/>
+            <p></p>
+            <label>Recordar usuario</label>
+            <input class="text-checkbox" type="checkbox" name="remember" value="true" />
             <p></p>
             <input value="Ingresar" type="submit" class="link"/>
+            
         </form>
-         
+        <p class="login-error">${error}</p>
         <p class="separator">
             ¿Nuevo usuario?
         </p>

@@ -50,18 +50,29 @@ public class Users implements Serializable {
     @Column(name = "name")
     private String name;
     @Size(max = 255)
-    @Column(name = "last_names")
+    @Column(name = "lastnames")
     private String lastNames;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 45)
     @Column(name = "email")
     private String email;
+    private String sessionId;
 
     public Users() {
     }
 
     public Users(Integer id) {
         this.id = id;
+    }
+    
+    public Users(String username, String name, String lastNames,
+            String email, String password) {
+        
+        this.username = username;
+        this.name = name;
+        this.lastNames = lastNames;
+        this.email = email;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -135,6 +146,10 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "models.Users[ id=" + id + " ]";
+    }
+
+    void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
     
 }

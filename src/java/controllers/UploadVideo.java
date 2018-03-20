@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import utils.MySqlConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -27,16 +28,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.UserDAO;
+import models.Users;
+import models.VideoDAO;
 import models.Videos;
 
 /**
  *
  * @author Tito
  */
-@WebServlet(name = "UploadVideo", urlPatterns = {"/UploadVideo"})
+@WebServlet(name = "UploadVideo", urlPatterns = {"/user/UploadVideo"})
 public class UploadVideo extends HttpServlet {
     
-    protected Videos createdVideo;
     
     
     /**
@@ -52,30 +55,14 @@ public class UploadVideo extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        try  {
-           
-            String title = request.getParameter("title");
-            String author = request.getParameter("author");          
-            int duration = Integer.parseInt(request.getParameter("duration"));
-            String description = request.getParameter("description");
-            String format = request.getParameter("format");
-            
-            Videos video = createVideo(title, author, duration, description, format);
-            createdVideo = addVideo(video, MySqlConnector.getInstance().getConnection());
-            
-        }
-        catch(Exception e) {
-            PrintWriter out = response.getWriter();
-            out.println(e.getMessage());
-            
-        }
+       
     }
     
-    public Videos createVideo(String title, String author, int duration, String description, String format) {
+    public Videos createVideo(Users user, String title, String author, int duration, String description, String format) {
     
         Videos video = new Videos();
         
-        video.setUserId(1);
+        video.setUserId(user.getId());
         video.setTitle(title);
         video.setAuthor(author);
         video.setDescription(description);
@@ -89,84 +76,6 @@ public class UploadVideo extends HttpServlet {
         return video;
     }
        
-    public Videos addVideo(Videos video, Connection connection) {
-        
-         String sql = "INSERT INTO videos(TITLE,AUTHOR,CREATED_AT,DURATION,REPRODUCTIONS,DESCRIPTION,FORMAT,USER_ID) "
-                 + "VALUES (?,?,?,?,?,?,?,?)";
- 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, video.getTitle());
-            pstmt.setString(2, video.getAuthor());
-            pstmt.setString(3, formatDate(video.getCreatedAt()));
-            pstmt.setInt(4, video.getDuration());
-            pstmt.setInt(5, 0);
-            pstmt.setString(6, video.getDescription());
-            pstmt.setString(7, video.getFormat());            
-            pstmt.setInt(8, video.getUserId());
-
-            pstmt.executeUpdate();
-            ResultSet rs = pstmt.getGeneratedKeys();
-            
-            if(rs.next())
-            {
-                int lastInsertedId = rs.getInt(1);
-                Videos createdVideo = getVideo(lastInsertedId);
-
-                return createdVideo;
-            }
-
-            return null;
-            
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        return null;
-    }
-
-    private String formatDate(Date date) {
-        
-        // Create an instance of SimpleDateFormat used for formatting 
-        // the string representation of date (month/day/year)
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        // Using DateFormat format method we can create a string 
-        // representation of a date with the defined format.
-        return df.format(date);
-    }
-    
-    public Videos getVideo(int id) {
-
-        Videos video = new Videos();
-        Connection connection = MySqlConnector.getInstance().getConnection();
-        
-        String sql = "Select * from videos where id = " + id  ;
- 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            ResultSet rs = pstmt.executeQuery(sql);
-            
-        while (rs.next()) {
-            video.setId(rs.getInt("ID"));
-            video.setTitle(rs.getString("TITLE"));
-            video.setAuthor(rs.getString("AUTHOR"));
-            video.setDescription(rs.getString("DESCRIPTION"));
-            video.setCreatedAt(rs.getDate("CREATED_AT"));  
-            video.setReproductions(rs.getInt("REPRODUCTIONS"));
-            video.setDuration(rs.getInt("DURATION"));
-            video.setFormat(rs.getString("FORMAT"));
-            video.setUserId(rs.getInt("USER_ID"));
-        }
-            
-            return video;
-            
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
-        return null;
-    }
-    
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -195,18 +104,37 @@ public class UploadVideo extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        if (createdVideo != null) {
+         try  {
+           
+            String title = request.getParameter("title");
+            String author = request.getParameter("author");          
+            int duration = Integer.parseInt(request.getParameter("duration"));
+            String description = request.getParameter("description");
+            String format = request.getParameter("format");
+            Users user = (Users) request.getSession().getAttribute("user");
+            
+            Videos video = createVideo(user, title, author, duration, description, format);
+            Videos createdVideo = VideoDAO.getInstance().saveVideo(video);
+            
+            if (createdVideo != null) {
         
-            request.setAttribute("id", createdVideo.getId());
-            request.setAttribute("title", createdVideo.getTitle());
-            request.setAttribute("author", createdVideo.getAuthor());
-            request.setAttribute("description", createdVideo.getDescription());
-            request.setAttribute("createdat", createdVideo.getCreatedAt());
-            request.setAttribute("reproductions", createdVideo.getReproductions());
-            request.setAttribute("duration", createdVideo.getDuration());
-            request.setAttribute("format", createdVideo.getFormat());
-            request.setAttribute("userid", createdVideo.getUserId());
-            request.getRequestDispatcher("/video_view.jsp").forward(request, response);
+                request.setAttribute("id", createdVideo.getId());
+                request.setAttribute("title", createdVideo.getTitle());
+                request.setAttribute("author", createdVideo.getAuthor());
+                request.setAttribute("description", createdVideo.getDescription());
+                request.setAttribute("createdat", createdVideo.getCreatedAt());
+                request.setAttribute("reproductions", createdVideo.getReproductions());
+                request.setAttribute("duration", createdVideo.getDuration());
+                request.setAttribute("format", createdVideo.getFormat());
+                request.setAttribute("userid", UserDAO.getInstance().findUserById(createdVideo.getUserId()).getUsername());
+                request.getRequestDispatcher("/user/video_view.jsp").forward(request, response);
+            }
+            
+        }
+        catch(Exception e) {
+            PrintWriter out = response.getWriter();
+            out.println(e.getMessage());
+            
         }
     }
 
