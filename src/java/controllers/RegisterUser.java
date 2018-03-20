@@ -88,7 +88,7 @@ public class RegisterUser extends HttpServlet {
                 
             } else {
                 
-                request.setAttribute("error", "El usuario ingresado no existe.");
+                request.setAttribute("error", "Ya existe un usuario registrado con ese nombre de usuario.");
                 request.getRequestDispatcher("/user_registration.jsp").forward(request, response);
             }
         }

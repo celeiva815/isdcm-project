@@ -66,6 +66,8 @@ public class Videos implements Serializable {
     @Size(max = 255)
     @Column(name = "format")
     private String format;
+    
+    private String url;
     @Basic(optional = false)
     @NotNull
     @Column(name = "user_id")
@@ -149,6 +151,14 @@ public class Videos implements Serializable {
     public void setFormat(String format) {
         this.format = format;
     }
+    
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public int getUserId() {
         return userId;
@@ -194,5 +204,4 @@ public class Videos implements Serializable {
     public String toString() {
         return "models.Videos[ id=" + id + " ]";
     }
-    
 }

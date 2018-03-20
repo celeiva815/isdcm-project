@@ -56,6 +56,7 @@ public class VideoDAO {
                 video.setReproductions(rs.getInt("REPRODUCTIONS"));
                 video.setDuration(rs.getInt("DURATION"));
                 video.setFormat(rs.getString("FORMAT"));
+                video.setUrl(rs.getString("URL"));
                 video.setUserId(rs.getInt("USER_ID"));
                 
                 videos.add(video);
@@ -71,8 +72,8 @@ public class VideoDAO {
     public Videos saveVideo(Videos video) {
              
         Connection connection = MySqlConnector.getInstance().getConnection();
-        String sql = "INSERT INTO videos(TITLE,AUTHOR,CREATED_AT,DURATION,REPRODUCTIONS,DESCRIPTION,FORMAT,USER_ID) "
-                 + "VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO videos(TITLE,AUTHOR,CREATED_AT,DURATION,REPRODUCTIONS,DESCRIPTION,FORMAT,URL,USER_ID) "
+                 + "VALUES (?,?,?,?,?,?,?,?,?)";
  
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, video.getTitle());
@@ -81,8 +82,9 @@ public class VideoDAO {
             pstmt.setInt(4, video.getDuration());
             pstmt.setInt(5, 0);
             pstmt.setString(6, video.getDescription());
-            pstmt.setString(7, video.getFormat());            
-            pstmt.setInt(8, video.getUserId());
+            pstmt.setString(7, video.getFormat());
+            pstmt.setString(8, video.getUrl());             
+            pstmt.setInt(9, video.getUserId());
 
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
@@ -124,6 +126,7 @@ public class VideoDAO {
             video.setReproductions(rs.getInt("REPRODUCTIONS"));
             video.setDuration(rs.getInt("DURATION"));
             video.setFormat(rs.getString("FORMAT"));
+            video.setUrl(rs.getString("URL"));
             video.setUserId(rs.getInt("USER_ID"));
         }
             
@@ -158,6 +161,7 @@ public class VideoDAO {
                 video.setReproductions(rs.getInt("REPRODUCTIONS"));
                 video.setDuration(rs.getInt("DURATION"));
                 video.setFormat(rs.getString("FORMAT"));
+                video.setUrl(rs.getString("URL"));
                 video.setUserId(rs.getInt("USER_ID"));
                 
                 videos.add(video);

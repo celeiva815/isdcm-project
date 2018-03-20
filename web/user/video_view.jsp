@@ -37,6 +37,8 @@
             <p>${duration}</p>
             <h3>Formato</h3>
             <p>${format}</p>
+            <h3>Url</h3>
+            <p>${url}</p>
             <h3>Usuario</h3>
             <p>${userid}</p>
         </div>

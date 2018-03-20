@@ -31,10 +31,10 @@
                         <th>Título</th>
                         <th>Autor</th>
                         <th>Descripción</th>
-                        <th>Fecha de Creación</th>
                         <th>Reproducciones</th>
                         <th>Duración</th>
                         <th>Formato</th>
+                        <th>Video</th>
                         <th>Usuario</th>
                     </tr>
                 </thead>
@@ -45,10 +45,16 @@
                             <td data-th="Título">${video.title}</td>
                             <td data-th="Autor">${video.author}</td>
                             <td data-th="Descripción">${video.description}</td>
-                            <td data-th="Creado en">${video.createdAt}</td>
                             <td data-th="Reproducciones">${video.reproductions}</td>
                             <td data-th="Duración">${video.duration}</td>
                             <td data-th="Formato">${video.format}</td>
+                            <td data-th="Video">                    
+                                <a href="${video.url}" class="link new-user" target="_blank">
+                                    <c:if test="${not empty video.url}">
+                                    <span><i class="fas fa-play"></i></span>
+                                    </c:if>
+                                </a>
+                            </td>
                             <td data-th="Usuario">${video.getUser().getUsername()}</td>
                         </tr>
                     </c:forEach>

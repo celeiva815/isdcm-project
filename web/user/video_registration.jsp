@@ -27,14 +27,17 @@
             <input type="text" name="title"/>
             <p>Autor: </p>
             <input type="text" name="author"/>
-            <p>Duración:</p>
-            <input type="text" name="duration"/>
+            <p>Minutos de duración:</p>
+            <input type="number" name="duration" min="1"/>
             <p>Descripción:</p>
             <input type="text" name="description"/>
             <p>Formato:</p>
             <input type="text" name="format"/>
+            <p>URL:</p>
+            <input type="text" name="url"/>
             <p></p>
             <input value="Subir Video" type="submit" class="link"/>
+            <p class="login-error">${error}</p>
         </form>
     </body>
 </html>

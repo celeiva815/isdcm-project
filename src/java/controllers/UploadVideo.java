@@ -5,24 +5,9 @@
  */
 package controllers;
 
-import utils.MySqlConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -58,7 +43,7 @@ public class UploadVideo extends HttpServlet {
        
     }
     
-    public Videos createVideo(Users user, String title, String author, int duration, String description, String format) {
+    public Videos createVideo(Users user, String title, String author, int duration, String description, String format, String url) {
     
         Videos video = new Videos();
         
@@ -68,6 +53,7 @@ public class UploadVideo extends HttpServlet {
         video.setDescription(description);
         video.setDuration(duration);
         video.setFormat(format);
+        video.setUrl(url);
         
         Date date = new Date();
         
@@ -111,9 +97,10 @@ public class UploadVideo extends HttpServlet {
             int duration = Integer.parseInt(request.getParameter("duration"));
             String description = request.getParameter("description");
             String format = request.getParameter("format");
+            String url = request.getParameter("url");
             Users user = (Users) request.getSession().getAttribute("user");
             
-            Videos video = createVideo(user, title, author, duration, description, format);
+            Videos video = createVideo(user, title, author, duration, description, format, url);
             Videos createdVideo = VideoDAO.getInstance().saveVideo(video);
             
             if (createdVideo != null) {
@@ -126,14 +113,18 @@ public class UploadVideo extends HttpServlet {
                 request.setAttribute("reproductions", createdVideo.getReproductions());
                 request.setAttribute("duration", createdVideo.getDuration());
                 request.setAttribute("format", createdVideo.getFormat());
+                request.setAttribute("url", createdVideo.getUrl());
                 request.setAttribute("userid", UserDAO.getInstance().findUserById(createdVideo.getUserId()).getUsername());
                 request.getRequestDispatcher("/user/video_view.jsp").forward(request, response);
+                
+            } else {
+                request.setAttribute("error", "Ya existe un video registrado con ese título.");
+                request.getRequestDispatcher("/user/video_registration.jsp").forward(request, response);
             }
-            
         }
         catch(Exception e) {
-            PrintWriter out = response.getWriter();
-            out.println(e.getMessage());
+             request.setAttribute("error", "Hubo un error al intentar registrar el video.");
+             request.getRequestDispatcher("/user/video_registration.jsp").forward(request, response);
             
         }
     }
