@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/errors.css">
         <link rel="stylesheet" href="../css/errors.css">
-        <title>Error 500</title>
+        <title>Error 404</title>
     </head>
     <body>
         <audio controls autoplay loop hidden="hidden">
@@ -21,7 +21,7 @@
 <div class="container">
 	
 	<div  class="error">
-		<p class="p">5</p>
+		<p class="p">4</p>
 		<span class="dracula">			
 			<div class="con">
 				<div class="hair"></div>
@@ -34,26 +34,17 @@
   			<div class="blod blod2"></div>
 			</div>
 		</span>
-		<span class="dracula">			
-			<div class="con">
-				<div class="hair"></div>
-				<div class="hair-r"></div>
-				<div class="head"></div>
-    		<div class="eye"></div>
-    		<div class="eye eye-r"></div>
-  			<div class="mouth"></div>
-  			<div class="blod"></div>
-  			<div class="blod blod2"></div>
-			</div>
-		</span>
+		<p class="p">4</p>
 		
 		<div class="page-ms">
-			<p class="page-msg">El servidor ha muerto o simplemente hubo un problema.</p>
+			<p class="page-msg">Booo!! La página que buscas no existe o no se encuentra</p>
                         <a href="/VideoManager/user/index.html">
                             <button class="go-back">Volver</button>
                         </a>
 		</div>
         </div>
+	
+
 <!-- 	<p>Auto back to home page</p> -->
 	</div>
     </body>

@@ -38,7 +38,7 @@
             <input name="confirm_password" type="password" id="confirm_password"/>
             <p></p>
             <input value="Registrar Usuario" type="submit" class="link"/>
-            
+            <p class="login-error">${error}</p>
             <p class="separator">
                 ¿Ya eres usuario?
             </p>

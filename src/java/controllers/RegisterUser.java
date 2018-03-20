@@ -85,6 +85,11 @@ public class RegisterUser extends HttpServlet {
                 request.setAttribute("email", createdUser.getEmail());
                 request.setAttribute("password", createdUser.getPassword());
                 request.getRequestDispatcher("/user/user_view.jsp").forward(request, response);
+                
+            } else {
+                
+                request.setAttribute("error", "El usuario ingresado no existe.");
+                request.getRequestDispatcher("/user_registration.jsp").forward(request, response);
             }
         }
          catch(Exception e) {

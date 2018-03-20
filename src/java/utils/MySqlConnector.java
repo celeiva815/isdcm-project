@@ -18,7 +18,7 @@ public class MySqlConnector {
         private static MySqlConnector instance;
         private MySqlConnector(){}
         
-        private boolean isRemote = true;
+        private boolean isRemote = false;
         
         public static MySqlConnector getInstance() {
             
