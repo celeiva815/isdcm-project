@@ -3,29 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Projects/Netbeans/VideoManager/web/WEB-INF/glassfish-resources.xml</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/web/user/index.html</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user/video_view.jsp</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/web/login.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/models/Videos.java</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/models/UserDAO.java</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/web/js/user.js</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/UploadVideo.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/LogIn.java</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/models/Users.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/css/style.css</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/ShowVideos.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user_registration.jsp</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/models/VideoDAO.java</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/RegisterUser.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/filters/LoginFilter.java</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/web/user/video_list.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user/video_registration.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user/user_view.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/utils/MySqlConnector.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/utils/DateHelper.java</file>
-            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/utils/CookieHelper.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/WEB-INF/glassfish-resources.xml</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/user/index.html</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/css/errors.css</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/login.jsp</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/models/UserDAO.java</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/js/user.js</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/error/404.jsp</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/models/Users.java</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/models/VideoDAO.java</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/RegisterUser.java</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/user/video_list.jsp</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/utils/CookieHelper.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/CloseSession.java</file>
         </group>
     </open-files>
