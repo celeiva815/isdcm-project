@@ -34,9 +34,9 @@ public class VideoDAO {
     private VideoDAO(){}
     
     
-     public ArrayList<Videos> findVideosByUserId(int userId) {
+     public ArrayList<Video> findVideosByUserId(int userId) {
 
-        ArrayList<Videos> videos = new ArrayList<>();
+        ArrayList<Video> videos = new ArrayList<>();
         Connection connection = MySqlConnector.getInstance().getConnection();
         
         String sql = "Select * from videos where user_id = " + userId  ;
@@ -46,13 +46,14 @@ public class VideoDAO {
             
             while (rs.next()) {
 
-                Videos video = new Videos();
+                Video video = new Video();
 
                 video.setId(rs.getInt("ID"));
                 video.setTitle(rs.getString("TITLE"));
                 video.setAuthor(rs.getString("AUTHOR"));
                 video.setDescription(rs.getString("DESCRIPTION"));
-                video.setCreatedAt(rs.getDate("CREATED_AT"));
+                video.setCreatedAt(rs.getDate("CREATED_AT"));                
+                video.setReleaseDate(rs.getDate("RELEASE_DATE"));
                 video.setReproductions(rs.getInt("REPRODUCTIONS"));
                 video.setDuration(rs.getInt("DURATION"));
                 video.setFormat(rs.getString("FORMAT"));
@@ -69,22 +70,23 @@ public class VideoDAO {
         return videos;
     }
      
-    public Videos saveVideo(Videos video) {
+    public Video saveVideo(Video video) {
              
         Connection connection = MySqlConnector.getInstance().getConnection();
-        String sql = "INSERT INTO videos(TITLE,AUTHOR,CREATED_AT,DURATION,REPRODUCTIONS,DESCRIPTION,FORMAT,URL,USER_ID) "
-                 + "VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO videos(TITLE,AUTHOR,CREATED_AT,RELEASE_DATE,DURATION,REPRODUCTIONS,DESCRIPTION,FORMAT,URL,USER_ID) "
+                 + "VALUES (?,?,?,?,?,?,?,?,?,?)";
  
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, video.getTitle());
             pstmt.setString(2, video.getAuthor());
             pstmt.setString(3, DateHelper.formatDate(video.getCreatedAt()));
-            pstmt.setInt(4, video.getDuration());
-            pstmt.setInt(5, 0);
-            pstmt.setString(6, video.getDescription());
-            pstmt.setString(7, video.getFormat());
-            pstmt.setString(8, video.getUrl());             
-            pstmt.setInt(9, video.getUserId());
+            pstmt.setString(4, DateHelper.formatDate(video.getReleaseDate()));
+            pstmt.setInt(5, video.getDuration());
+            pstmt.setInt(6, 0);
+            pstmt.setString(7, video.getDescription());
+            pstmt.setString(8, video.getFormat());
+            pstmt.setString(9, video.getUrl());             
+            pstmt.setInt(10, video.getUserId());
 
             pstmt.executeUpdate();
             ResultSet rs = pstmt.getGeneratedKeys();
@@ -92,7 +94,7 @@ public class VideoDAO {
             if(rs.next())
             {
                 int lastInsertedId = rs.getInt(1);
-                Videos createdVideo = findVideoById(lastInsertedId);
+                Video createdVideo = findVideoById(lastInsertedId);
 
                 return createdVideo;
             }
@@ -107,9 +109,9 @@ public class VideoDAO {
     }
     
          
-    public Videos findVideoById(int id) {
+    public Video findVideoById(int id) {
 
-        Videos video = new Videos();
+        Video video = new Video();
         Connection connection = MySqlConnector.getInstance().getConnection();
         
         String sql = "Select * from videos where id = " + id  ;
@@ -122,7 +124,8 @@ public class VideoDAO {
             video.setTitle(rs.getString("TITLE"));
             video.setAuthor(rs.getString("AUTHOR"));
             video.setDescription(rs.getString("DESCRIPTION"));
-            video.setCreatedAt(rs.getDate("CREATED_AT"));  
+            video.setCreatedAt(rs.getDate("CREATED_AT"));
+            video.setReleaseDate(rs.getDate("RELEASE_DATE"));
             video.setReproductions(rs.getInt("REPRODUCTIONS"));
             video.setDuration(rs.getInt("DURATION"));
             video.setFormat(rs.getString("FORMAT"));
@@ -139,9 +142,9 @@ public class VideoDAO {
         return null;
     }
 
-    public ArrayList<Videos> getAll() {
+    public ArrayList<Video> getAll() {
         
-        ArrayList<Videos> videos = new ArrayList<>();
+        ArrayList<Video> videos = new ArrayList<>();
         Connection connection = MySqlConnector.getInstance().getConnection();
         
         String sql = "Select * from videos";
@@ -151,13 +154,14 @@ public class VideoDAO {
             
             while (rs.next()) {
 
-                Videos video = new Videos();
+                Video video = new Video();
 
                 video.setId(rs.getInt("ID"));
                 video.setTitle(rs.getString("TITLE"));
                 video.setAuthor(rs.getString("AUTHOR"));
                 video.setDescription(rs.getString("DESCRIPTION"));
                 video.setCreatedAt(rs.getDate("CREATED_AT"));
+                video.setReleaseDate(rs.getDate("RELEASE_DATE"));
                 video.setReproductions(rs.getInt("REPRODUCTIONS"));
                 video.setDuration(rs.getInt("DURATION"));
                 video.setFormat(rs.getString("FORMAT"));

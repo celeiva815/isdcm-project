@@ -29,6 +29,8 @@
             <p>${author}</p>
             <h3>Descripción</h3>
             <p>${description}</p>
+            <h3>Fecha de Estreno</h3>
+            <p>${releasedate}</p>
             <h3>Fecha de Creación</h3>
             <p>${createdat}</p>
             <h3>Reproducciones</h3>

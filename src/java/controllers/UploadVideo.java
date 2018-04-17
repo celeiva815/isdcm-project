@@ -16,7 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import models.UserDAO;
 import models.Users;
 import models.VideoDAO;
-import models.Videos;
+import models.Video;
+import utils.DateHelper;
 
 /**
  *
@@ -43,13 +44,14 @@ public class UploadVideo extends HttpServlet {
        
     }
     
-    public Videos createVideo(Users user, String title, String author, int duration, String description, String format, String url) {
+    public Video createVideo(Users user, String title, String author, Date releaseDate, int duration, String description, String format, String url) {
     
-        Videos video = new Videos();
+        Video video = new Video();
         
         video.setUserId(user.getId());
         video.setTitle(title);
         video.setAuthor(author);
+        video.setReleaseDate(releaseDate);
         video.setDescription(description);
         video.setDuration(duration);
         video.setFormat(format);
@@ -58,6 +60,7 @@ public class UploadVideo extends HttpServlet {
         Date date = new Date();
         
         video.setCreatedAt(date);
+        
         
         return video;
     }
@@ -93,15 +96,16 @@ public class UploadVideo extends HttpServlet {
          try  {
            
             String title = request.getParameter("title");
-            String author = request.getParameter("author");          
+            String author = request.getParameter("author");
+            Date releaseDate = DateHelper.parseDate(request.getParameter("release_date"), DateHelper.YEAR_MONTH_DAY);
             int duration = Integer.parseInt(request.getParameter("duration"));
             String description = request.getParameter("description");
             String format = request.getParameter("format");
             String url = request.getParameter("url");
             Users user = (Users) request.getSession().getAttribute("user");
             
-            Videos video = createVideo(user, title, author, duration, description, format, url);
-            Videos createdVideo = VideoDAO.getInstance().saveVideo(video);
+            Video video = createVideo(user, title, author, releaseDate, duration, description, format, url);
+            Video createdVideo = VideoDAO.getInstance().saveVideo(video);
             
             if (createdVideo != null) {
         
@@ -109,7 +113,8 @@ public class UploadVideo extends HttpServlet {
                 request.setAttribute("title", createdVideo.getTitle());
                 request.setAttribute("author", createdVideo.getAuthor());
                 request.setAttribute("description", createdVideo.getDescription());
-                request.setAttribute("createdat", createdVideo.getCreatedAt());
+                request.setAttribute("createdat", createdVideo.getCreatedAt());                
+                request.setAttribute("releasedate", createdVideo.getReleaseDate());
                 request.setAttribute("reproductions", createdVideo.getReproductions());
                 request.setAttribute("duration", createdVideo.getDuration());
                 request.setAttribute("format", createdVideo.getFormat());

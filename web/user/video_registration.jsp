@@ -27,6 +27,8 @@
             <input type="text" name="title"/>
             <p>Autor: </p>
             <input type="text" name="author"/>
+            <p>Fecha de Estreno: </p>
+            <input type="date" name="release_date"/>
             <p>Minutos de duración:</p>
             <input type="number" name="duration" min="1"/>
             <p>Descripción:</p>

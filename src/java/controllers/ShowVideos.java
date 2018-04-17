@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Users;
 import models.VideoDAO;
-import models.Videos;
+import models.Video;
 
 /**
  *
@@ -59,7 +59,7 @@ public class ShowVideos extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-        ArrayList<Videos> videos;
+        ArrayList<Video> videos = new ArrayList<>();
         String param = request.getParameter("videos");
         
         if (param != null && param.equals("all")) {
@@ -72,11 +72,8 @@ public class ShowVideos extends HttpServlet {
             videos = VideoDAO.getInstance().findVideosByUserId(user.getId());
         }
         
-        if (videos.size() > 0) {
-            
-            request.setAttribute("videos", videos);
-            request.getRequestDispatcher("/user/video_list.jsp").forward(request, response);
-        }
+        request.setAttribute("videos", videos);
+        request.getRequestDispatcher("/user/video_list.jsp").forward(request, response);
     }
 
     /**

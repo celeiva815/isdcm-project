@@ -24,66 +24,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Tito
  */
-@Entity
 @Table(name = "videos")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Videos.findAll", query = "SELECT v FROM Videos v")
-    , @NamedQuery(name = "Videos.findById", query = "SELECT v FROM Videos v WHERE v.id = :id")
-    , @NamedQuery(name = "Videos.findByTitle", query = "SELECT v FROM Videos v WHERE v.title = :title")
-    , @NamedQuery(name = "Videos.findByAuthor", query = "SELECT v FROM Videos v WHERE v.author = :author")
-    , @NamedQuery(name = "Videos.findByDescription", query = "SELECT v FROM Videos v WHERE v.description = :description")
-    , @NamedQuery(name = "Videos.findByCreatedAt", query = "SELECT v FROM Videos v WHERE v.createdAt = :createdAt")
-    , @NamedQuery(name = "Videos.findByReproductions", query = "SELECT v FROM Videos v WHERE v.reproductions = :reproductions")
-    , @NamedQuery(name = "Videos.findByDuration", query = "SELECT v FROM Videos v WHERE v.duration = :duration")
-    , @NamedQuery(name = "Videos.findByFormat", query = "SELECT v FROM Videos v WHERE v.format = :format")
-    , @NamedQuery(name = "Videos.findByUserId", query = "SELECT v FROM Videos v WHERE v.userId = :userId")
-    , @NamedQuery(name = "Videos.findByVideoscol", query = "SELECT v FROM Videos v WHERE v.videoscol = :videoscol")})
-public class Videos implements Serializable {
+public class Video implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id")
     private Integer id;
-    @Size(max = 255)
-    @Column(name = "title")
     private String title;
-    @Size(max = 255)
-    @Column(name = "author")
     private String author;
-    @Size(max = 255)
-    @Column(name = "description")
     private String description;
-    @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
-    @Column(name = "reproductions")
+    private Date createdAt;    
+    private Date releaseDate;
     private Integer reproductions;
-    @Column(name = "duration")
     private Integer duration;
-    @Size(max = 255)
-    @Column(name = "format")
     private String format;
-    
     private String url;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "user_id")
     private int userId;
-    @Size(max = 45)
-    @Column(name = "videoscol")
     private String videoscol;
 
-    public Videos() {
+    public Video() {
     }
 
-    public Videos(Integer id) {
+    public Video(Integer id) {
         this.id = id;
     }
 
-    public Videos(Integer id, int userId) {
+    public Video(Integer id, int userId) {
         this.id = id;
         this.userId = userId;
     }
@@ -126,6 +91,14 @@ public class Videos implements Serializable {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+    
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Integer getReproductions() {
@@ -190,10 +163,10 @@ public class Videos implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Videos)) {
+        if (!(object instanceof Video)) {
             return false;
         }
-        Videos other = (Videos) object;
+        Video other = (Video) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

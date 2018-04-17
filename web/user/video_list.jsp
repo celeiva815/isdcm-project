@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,8 +16,6 @@
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="css/style.css">
         <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-        <script src="../js/index.js"></script>
-        <script src="js/index.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
         <title>Lista de Videos</title>
@@ -29,7 +28,8 @@
                     <tr>
                         <th>Id</th>
                         <th>Título</th>
-                        <th>Autor</th>
+                        <th>Autor</th>                        
+                        <th>Estreno</th>
                         <th>Descripción</th>
                         <th>Reproducciones</th>
                         <th>Duración</th>
@@ -44,6 +44,8 @@
                             <td data-th="Id">${video.id}</td>
                             <td data-th="Título">${video.title}</td>
                             <td data-th="Autor">${video.author}</td>
+                            <td data-th="Estreno">${video.releaseDate}
+                            </td>
                             <td data-th="Descripción">${video.description}</td>
                             <td data-th="Reproducciones">${video.reproductions}</td>
                             <td data-th="Duración">${video.duration}</td>
