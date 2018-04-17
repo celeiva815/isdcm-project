@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://services/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://services/">
+
+<xs:element name="FindVideoByAuthor" type="tns:FindVideoByAuthor"/>
+
+<xs:element name="FindVideoByAuthorResponse" type="tns:FindVideoByAuthorResponse"/>
+
+<xs:element name="FindVideoByTitle" type="tns:FindVideoByTitle"/>
+
+<xs:element name="FindVideoByTitleResponse" type="tns:FindVideoByTitleResponse"/>
+
+<xs:element name="FindVideoByYear" type="tns:FindVideoByYear"/>
+
+<xs:element name="FindVideoByYearResponse" type="tns:FindVideoByYearResponse"/>
+
+<xs:complexType name="FindVideoByAuthor">
+<xs:sequence>
+<xs:element name="author" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FindVideoByAuthorResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:video" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="video">
+<xs:sequence>
+<xs:element name="author" type="xs:string" minOccurs="0"/>
+<xs:element name="createdAt" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="duration" type="xs:int" minOccurs="0"/>
+<xs:element name="format" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+<xs:element name="releaseDate" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="reproductions" type="xs:int" minOccurs="0"/>
+<xs:element name="title" type="xs:string" minOccurs="0"/>
+<xs:element name="url" type="xs:string" minOccurs="0"/>
+<xs:element name="userId" type="xs:int"/>
+<xs:element name="videoscol" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FindVideoByYear">
+<xs:sequence>
+<xs:element name="year" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FindVideoByYearResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:video" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FindVideoByTitle">
+<xs:sequence>
+<xs:element name="title" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FindVideoByTitleResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:video" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
