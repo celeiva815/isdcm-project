@@ -56,7 +56,7 @@ public class MySqlConnector {
             Connection conn = null;
             
             try {
-                conn = DriverManager.getConnection(url, "root", "");
+                conn = DriverManager.getConnection(url, "root", "asdfghj8");
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
