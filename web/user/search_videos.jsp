@@ -28,10 +28,10 @@
         </form>
         <p></p>
         <div class="separator">
-                    <a href="/VideoManager/user/index.html" class="link new-user">
-                        <span><i class="fas fa-home"></i></span>
-                        <span class="link-text">Volver al inicio</span>
-                    </a>
+            <a href="/VideoManager/user/index.html" class="link new-user">
+                <span><i class="fas fa-home"></i></span>
+                <span class="link-text">Volver al inicio</span>
+            </a>
         </div>
     </body>
 </html>
