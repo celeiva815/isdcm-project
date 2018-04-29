@@ -34,7 +34,10 @@
             <p>Descripción:</p>
             <input type="text" name="description"/>
             <p>Formato:</p>
-            <input type="text" name="format"/>
+            <select name="format">
+                <option value="mp4">MP4</option>
+                <option value="youtube">youtube</option>
+            </select>
             <p>URL:</p>
             <input type="text" name="url"/>
             <p></p>

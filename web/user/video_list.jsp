@@ -24,63 +24,8 @@
         <title>Lista de Videos</title>
     </head>
     <body>
-        <h1>Lista de Videos</h1>
-        <div>
-            <table class="rwd-table">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Título</th>
-                        <th>Autor</th>                        
-                        <th>Estreno</th>
-                        <th>Descripción</th>
-                        <th>Reproducciones</th>
-                        <th>Duración</th>
-                        <th>Formato</th>
-                        <th>Video</th>
-                        <th>Usuario</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${videos}" var="video">
-                        <tr>
-                            <td data-th="Id">${video.id}</td>
-                            <td data-th="Título">${video.title}</td>
-                            <td data-th="Autor">${video.author}</td>
-                            <td data-th="Estreno">${video.releaseDate}
-                            </td>
-                            <td data-th="Descripción">${video.description}</td>
-                            <td data-th="Reproducciones">${video.reproductions}</td>
-                            <td data-th="Duración">${video.duration}</td>
-                            <td data-th="Formato">${video.format}</td>
-                            <td data-th="Video">                    
-                                <a href="${video.url}" class="video-play link new-user" data-title="${video.title}" data-mp4="${video.url}" data-ogv="${video.url}">
-                                <span><i class="fas fa-play"></i></span>
-                                </a>
-                            </td>
-                            <td data-th="Usuario">${video.getUser().getUsername()}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
-                <div class="separator">
-            <ul>
-                <li>
-                    <a href="/VideoManager/user/video_registration.jsp" class="link new-user">
-                        <span><i class="fas fa-upload"></i></span>
-                        <span class="link-text">Registrar nuevo video</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/VideoManager/user/index.html" class="link new-user">
-                        <span><i class="fas fa-home"></i></span>
-                        <span class="link-text">Volver al inicio</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div id="jp_container_1" class="jp-video " role="application" aria-label="media player">
+        <div class="separator"></div>
+           <div id="jp_container_1" class="jp-video " role="application" aria-label="media player">
             <div class="jp-type-single">
               <div id="jquery_jplayer_1" class="jp-jplayer"></div>
               <div class="jp-gui">
@@ -123,5 +68,73 @@
               </div>
             </div>
           </div>
+        
+        <h1>Lista de Videos</h1>
+        <div>
+            <table class="rwd-table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Título</th>
+                        <th>Autor</th>                        
+                        <th>Estreno</th>
+                        <th>Descripción</th>
+                        <th>Reproducciones</th>
+                        <th>Duración</th>
+                        <th>Formato</th>
+                        <th>Video</th>
+                        <th>Usuario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${videos}" var="video">
+                        <tr>
+                            <td data-th="Id">${video.id}</td>
+                            <td data-th="Título">${video.title}</td>
+                            <td data-th="Autor">${video.author}</td>
+                            <td data-th="Estreno">${video.releaseDate}
+                            </td>
+                            <td data-th="Descripción">${video.description}</td>
+                            <td data-th="Reproducciones">${video.reproductions}</td>
+                            <td data-th="Duración">${video.duration}</td>
+                            <td data-th="Formato">${video.format}</td>
+                            <td data-th="Video">
+                                
+                            <c:choose>
+                                <c:when test="${video.format=='mp4'}">
+                                    <a href="${video.url}" class="video-play link new-user" data-title="${video.title}" data-mp4="${video.url}" data-ogv="${video.url}">
+                                </c:when>    
+                                <c:otherwise>
+                                    <a href="${video.url}" class="link new-user" target="_blank">
+                                </c:otherwise>
+                            </c:choose>
+                                    <c:if test="${not empty video.url}">
+                                        <span><i class="fas fa-play"></i></span>
+                                    </c:if>
+                                </a>
+                            </td>
+                            <td data-th="Usuario">${video.getUser().getUsername()}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+                <div class="separator">
+            <ul>
+                <li>
+                    <a href="/VideoManager/user/video_registration.jsp" class="link new-user">
+                        <span><i class="fas fa-upload"></i></span>
+                        <span class="link-text">Registrar nuevo video</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/VideoManager/user/index.html" class="link new-user">
+                        <span><i class="fas fa-home"></i></span>
+                        <span class="link-text">Volver al inicio</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+     
     </body>
 </html>

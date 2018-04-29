@@ -14,6 +14,10 @@
  * Skin Version: 2.1 (jPlayer 2.8.0)
  * Date: 13th November 2014
  */
+
+#jp_container_1 {
+    margin: auto;
+}
 .jp-audio *:focus,
 .jp-audio-stream *:focus,
 .jp-video *:focus {

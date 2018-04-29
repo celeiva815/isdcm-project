@@ -67,7 +67,7 @@ li {
 
 button, .link {
   outline: none;
-  background: #34495E;
+  background: #3a2a45;
   width: 100%;
   border: 0;
   border-radius: 4px;
@@ -113,11 +113,11 @@ body {
 h1 {
   font-weight: normal;
   letter-spacing: -1px;
-  color: #34495E;
+  color: #3a2a45;
 }
 
 .rwd-table {
-  background: #34495E;
+  background: #3a2a45;
   color: #fff;
   border-radius: .4em;
   overflow: hidden;
