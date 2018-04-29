@@ -1,5 +1,6 @@
 # Compiled class file
 *.class
+*.mp4
 
 # Log file
 *.properties
@@ -23,3 +24,4 @@
 hs_err_pid*
 /build/
 /dist/
+/web/videos/

@@ -14,8 +14,11 @@
         <script src="https://s.codepen.io/assets/libs/modernizr.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
         <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="css/style.css">
-        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js' type="text/javascript"></script>
+        <link rel="stylesheet" href="../pink.flag/css/jplayer.pink.flag.css" type="text/css">  
+        <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/jquery.jplayer.min.js"></script>
+        <script src="../js/index.js"></script>
+        <script src="../js/jplayer.video.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
         <title>Lista de Videos</title>
@@ -51,10 +54,8 @@
                             <td data-th="Duración">${video.duration}</td>
                             <td data-th="Formato">${video.format}</td>
                             <td data-th="Video">                    
-                                <a href="${video.url}" class="link new-user" target="_blank">
-                                    <c:if test="${not empty video.url}">
-                                    <span><i class="fas fa-play"></i></span>
-                                    </c:if>
+                                <a href="${video.url}" class="video-play link new-user" data-title="${video.title}" data-mp4="${video.url}" data-ogv="${video.url}">
+                                <span><i class="fas fa-play"></i></span>
                                 </a>
                             </td>
                             <td data-th="Usuario">${video.getUser().getUsername()}</td>
@@ -79,5 +80,48 @@
                 </li>
             </ul>
         </div>
+        <div id="jp_container_1" class="jp-video " role="application" aria-label="media player">
+            <div class="jp-type-single">
+              <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+              <div class="jp-gui">
+                <div class="jp-video-play">
+                  <button class="jp-video-play-icon" role="button" tabindex="0">play</button>
+                </div>
+                <div class="jp-interface">
+                  <div class="jp-progress">
+                    <div class="jp-seek-bar">
+                      <div class="jp-play-bar"></div>
+                    </div>
+                  </div>
+                  <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                  <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                  <div class="jp-details">
+                    <div class="jp-title" aria-label="title">&nbsp;</div>
+                  </div>
+                  <div class="jp-controls-holder">
+                    <div class="jp-volume-controls">
+                      <button class="jp-mute" role="button" tabindex="0">mute</button>
+                      <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+                      <div class="jp-volume-bar">
+                        <div class="jp-volume-bar-value"></div>
+                      </div>
+                    </div>
+                    <div class="jp-controls">
+                      <button class="jp-play" role="button" tabindex="0">play</button>
+                      <button class="jp-stop" role="button" tabindex="0">stop</button>
+                    </div>
+                    <div class="jp-toggles">
+                      <button class="jp-repeat" role="button" tabindex="0">repeat</button>
+                      <button class="jp-full-screen" role="button" tabindex="0">full screen</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="jp-no-solution">
+                <span>Update Required</span>
+                To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+              </div>
+            </div>
+          </div>
     </body>
 </html>

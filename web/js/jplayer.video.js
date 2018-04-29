@@ -6,17 +6,9 @@
 
  $(document).ready(function(){
       $("#jquery_jplayer_1").jPlayer({
-        ready: function () {
-          $(this).jPlayer("setMedia", {
-            title: "Big Buck Bunny Trailer",
-            m4v: "http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
-            ogv: "http://www.jplayer.org/video/ogv/Big_Buck_Bunny_Trailer.ogv",
-            poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
-          });
-        },
         cssSelectorAncestor: "#jp_container_1",
         swfPath: "/js",
-        supplied: "m4v, ogv",
+        supplied: "mp4, m4v, ogv",
         useStateClassSkin: true,
         autoBlur: false,
         smoothPlayBar: true,
@@ -24,4 +16,16 @@
         remainingDuration: true,
         toggleDuration: true
       });
+      
+            $(".video-play").click(function(event){
+            
+                event.preventDefault();
+                var video = $(this).data();
+                console.log(video);
+                $("#jquery_jplayer_1").jPlayer("setMedia", video).jPlayer("play");
+            });
+            
+                       
+
     });
+   
