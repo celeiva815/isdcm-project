@@ -19,11 +19,33 @@
       
     $(".video-play").click(function(event){
 
+        debugger;
         event.preventDefault();
         var video = $(this).data();
         console.log(video);
         $("#jquery_jplayer_1").jPlayer("setMedia", video).jPlayer("play");
         $("html, body").animate({ scrollTop: 0 }, "slow");
+        
+        var e = video.id;
+        
+        $.ajax({
+                    type: "POST",
+                    dataType:"text",
+                    contentType: "text/html; charset=utf-8",
+                    url: "http://localhost:8080/VideoREST/webresources/generic/increaseReproductions",
+                    data: e + "",
+                    success: function(data1) {
+                        debugger;
+                        console.log("response:" + data1);
+                        $("#video"+e)[0].textContent=data1;
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(' Error in processing!');
+
+                    }
+                });
+        
+        
     });
 });
    

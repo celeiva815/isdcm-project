@@ -95,17 +95,17 @@
                             <td data-th="Estreno">${video.releaseDate}
                             </td>
                             <td data-th="Descripción">${video.description}</td>
-                            <td data-th="Reproducciones">${video.reproductions}</td>
+                            <td id="video${video.id}" data-th="Reproducciones">${video.reproductions}</td>
                             <td data-th="Duración">${video.duration}</td>
                             <td data-th="Formato">${video.format}</td>
                             <td data-th="Video">
                                 
                             <c:choose>
                                 <c:when test="${video.format=='mp4'}">
-                                    <a href="${video.url}" class="video-play link new-user" data-title="${video.title}" data-mp4="${video.url}" data-ogv="${video.url}">
+                                    <a href="${video.url}" class="video-play link new-user" data-id="${video.id}" data-title="${video.title}" data-mp4="${video.url}" data-ogv="${video.url}">
                                 </c:when>    
                                 <c:otherwise>
-                                    <a href="${video.url}" class="link new-user" target="_blank">
+                                    <a href="${video.url}" data-id="${video.id}" class="video-play link new-user" target="_blank">
                                 </c:otherwise>
                             </c:choose>
                                     <c:if test="${not empty video.url}">
