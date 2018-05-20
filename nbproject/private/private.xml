@@ -7,14 +7,22 @@
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user/search_result.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/SearchVideos.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/WEB-INF/wsdl/localhost_8080/SearchVideoService/SearchVideoService.xsd_1.xsd</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/login.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/js/user.js</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/user/encryptation.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/js/jplayer.video.js</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/LogIn.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/css/style.css</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user_registration.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/WEB-INF/wsdl/localhost_8080/SearchVideoService/SearchVideoService.wsdl</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/RegisterUser.java</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/security/Encrypter.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user/video_list.jsp</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user/video_registration.jsp</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/utils/MySqlConnector.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/user/search_videos.jsp</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/web/WEB-INF/web.xml</file>
+            <file>file:/D:/Projects/Netbeans/VideoManager/src/java/controllers/EncryptDocument.java</file>
             <file>file:/D:/Projects/Netbeans/VideoManager/web/js/index.js</file>
         </group>
     </open-files>

@@ -144,7 +144,7 @@ public class LogIn extends HttpServlet {
         }
         catch(Exception e) {
             
-            request.setAttribute("error", "Hubo un error inesperado");
+            request.setAttribute("error", e.getMessage());
             doGet(request, response);
         }
     }
