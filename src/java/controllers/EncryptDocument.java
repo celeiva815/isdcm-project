@@ -108,20 +108,21 @@ public class EncryptDocument extends HttpServlet {
                 
             if (encryptation.equals("encrypt")) {
                Document encryptedDoc = encrypter.encrypt(key, document, true);
-               Document decryptedDoc = encrypter.decrypt(key, encryptedDoc);
-               
-               String decrypted = createStringFromDocument(decryptedDoc);               
                String encrypted = createStringFromDocument(encryptedDoc);
 
                
                try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-                out.println(decrypted);
+                out.println(encrypted);
             } 
                
                
             } else {
-               encrypter.decrypt(key, document);
+               Document decryptedDoc = encrypter.decrypt(key, document);
+               String decrypted = createStringFromDocument(decryptedDoc); 
+               
+               try (PrintWriter out = response.getWriter()) {
+                out.println(decrypted);
+                } 
             }
         } catch (Exception ex) {
             Logger.getLogger(EncryptDocument.class.getName()).log(Level.SEVERE, null, ex);
