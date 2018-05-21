@@ -27,7 +27,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import security.Encrypter;
+import security.XMLEncrypter;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -89,7 +89,7 @@ public class EncryptDocument extends HttpServlet {
             throws ServletException, IOException {
         
         //Inicializamos la herramienta de encriptación
-        Encrypter encrypter = Encrypter.getInstance();
+        XMLEncrypter encrypter = XMLEncrypter.getInstance();
         
         //Obtenemos los parámetros del JSP
         String encryptation = request.getParameter("encryptation");

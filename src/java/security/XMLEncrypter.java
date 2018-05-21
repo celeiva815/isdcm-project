@@ -18,17 +18,17 @@ import org.w3c.dom.Element;
  *
  * @author Tito
  */
-public class Encrypter {
+public class XMLEncrypter {
    
-    private static Encrypter instance;
+    private static XMLEncrypter instance;
     private final static String AES = "AES";
 
-    private Encrypter(){}
+    private XMLEncrypter(){}
     
-    public static Encrypter getInstance() {
+    public static XMLEncrypter getInstance() {
         
         if (instance == null) {
-            instance = new Encrypter();
+            instance = new XMLEncrypter();
         }
         
         return instance;

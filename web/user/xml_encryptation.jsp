@@ -10,11 +10,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="../css/style.css">
-        <title>Encriptación</title>
+        <title>Encriptación de XML</title>
     </head>
     <body>
         <form name="search_form" method="post" action="EncryptDocument" enctype="multipart/form-data">
-            <h1>Encriptación</h1>
+            <h1>Encriptación de XMLs</h1>
             <p>Seleccione el archivo a encriptar o desencriptar:</p>
             <input type="file" name ="document"/>
             <p>Ingrese la contraseña:</p>
