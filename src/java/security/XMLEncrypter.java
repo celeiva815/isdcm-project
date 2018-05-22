@@ -7,6 +7,9 @@ package security;
 
 import com.sun.org.apache.xml.internal.security.encryption.XMLCipher;
 import com.sun.org.apache.xml.internal.security.encryption.XMLEncryptionException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.naming.InitialContext;
@@ -39,7 +42,7 @@ public class XMLEncrypter {
         
         com.sun.org.apache.xml.internal.security.Init.init();
         XMLCipher keyCipher = XMLCipher.getInstance(XMLCipher.AES_128);
-        SecretKey symmetricKey = new SecretKeySpec(key.getBytes(), AES);
+        SecretKey symmetricKey = generateKey(key);
         
         keyCipher.init(XMLCipher.ENCRYPT_MODE, symmetricKey);
         
@@ -52,7 +55,7 @@ public class XMLEncrypter {
     public Document decrypt(String key, Document node) throws XMLEncryptionException, Exception {
         
         XMLCipher cipher = XMLCipher.getInstance(XMLCipher.AES_128);
-        SecretKey symmetricKey = new SecretKeySpec(key.getBytes(), AES);
+        SecretKey symmetricKey = generateKey(key);
         
         cipher.init(XMLCipher.DECRYPT_MODE, symmetricKey);
         
@@ -61,6 +64,15 @@ public class XMLEncrypter {
         return decryotedDoc;
     }
     
-    
+    public SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException {
+        
+         // Get the Key
+        byte[] key = password.getBytes();
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16); // use only first 128 bit
+
+        return new SecretKeySpec(key, AES);
+    }
     
 }

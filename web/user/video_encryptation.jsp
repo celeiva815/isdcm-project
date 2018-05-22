@@ -17,6 +17,8 @@
             <h1>Encriptación de Videos</h1>
             <p>Seleccione el video a encriptar o desencriptar:</p>
             <input type="file" name ="video"/>
+            <p>Ingrese la contraseña:</p>
+            <input type="password" name ="password" value="1234"/>
             <p></p>
             <input type="radio" name ="encryptation" value="encrypt"/>
             Encriptar <br/>

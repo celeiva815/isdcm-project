@@ -32,4 +32,13 @@
         <description>It can upload a video</description>
         <role-name>USER</role-name>
     </security-role>
+    <security-constraint>
+   <web-resource-collection>
+     <web-resource-name>Viewpoint Secure URLs</web-resource-name>
+     <url-pattern>/*</url-pattern>
+   </web-resource-collection>
+   <user-data-constraint>
+     <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+   </user-data-constraint>
+ </security-constraint>
 </web-app>

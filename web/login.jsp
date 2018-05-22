@@ -24,9 +24,9 @@
         
         <form name="log_in" action="LogIn" method="POST">
             <p>Usuario: </p>
-            <input name="username"/>
+            <input name="username" value="tito"/>
             <p> Contraseña: </p>
-            <input type="password" name="password"/>
+            <input type="password" name="password" value="1234"/>
             <p></p>
             <label>Recordar usuario</label>
             <input class="text-checkbox" type="checkbox" name="remember" value="true" />

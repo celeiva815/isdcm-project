@@ -5,9 +5,17 @@
  */
 package security;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  *
@@ -16,8 +24,8 @@ import javax.crypto.SecretKey;
 public class VideoEncrypter {
     
     private static VideoEncrypter instance;
-    private final static String UTF8 = "UTF8";    
-    private final static String DES = "DES";
+    private final static String UTF8 = "UTF-8";    
+    private final static String AES = "AES";
 
 
     private VideoEncrypter(){}
@@ -31,23 +39,21 @@ public class VideoEncrypter {
         return instance;
     }
     
-     public EncryptedVideoString encryptString(String text) {
+     public byte[] encryptBytes(byte[] bytes, String password) {
 
         try {
+
+            SecretKeySpec secretKeySpec = generateKey(password);
             
-            KeyGenerator keygenerator = KeyGenerator.getInstance(DES);
-            SecretKey myDesKey = keygenerator.generateKey();
+            Cipher desCipher = Cipher.getInstance(AES);
 
-            Cipher desCipher = Cipher.getInstance(DES);
-            byte[] bytes = text.getBytes(UTF8);
-
-            desCipher.init(Cipher.ENCRYPT_MODE, myDesKey);
+            desCipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
             byte[] textEncrypted = desCipher.doFinal(bytes);
 
-            String s = new String(textEncrypted);
-            
-            return new EncryptedVideoString(s, myDesKey);
-         
+            //return URLEncoder.encode(new BASE64Encoder().encode(textEncrypted), UTF8);
+            //return new BASE64Encoder().encode(textEncrypted);
+            return textEncrypted;
+
         } catch(Exception e) {
             System.out.println("Exception");
         }
@@ -55,19 +61,22 @@ public class VideoEncrypter {
         return null;
     }
      
-     public String desencryptString(EncryptedVideoString encrypted) {
+     public byte[] desencryptBytes(byte[] encryptedBytes, String password) {
 
         try {
             
+            SecretKeySpec secretKeySpec = generateKey(password);
+            
             Cipher desCipher;
-            desCipher = Cipher.getInstance(DES);
+            desCipher = Cipher.getInstance(AES);
+            
+            //String encryptedBase64 = URLDecoder.decode(encrypted, UTF8);
+            //byte[] encryptedBytes = new BASE64Decoder().decodeBuffer( encryptedBase64 );
 
-            byte[] bytes = encrypted.getEncrypted().getBytes(UTF8);
+            desCipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+            byte[] textDecrypted = desCipher.doFinal(encryptedBytes);
 
-            desCipher.init(Cipher.DECRYPT_MODE, encrypted.getKey());
-            byte[] textDecrypted = desCipher.doFinal(bytes);
-
-            return new String(textDecrypted);
+            return textDecrypted;
             
         }catch(Exception e)
         {
@@ -77,5 +86,16 @@ public class VideoEncrypter {
         return null;
     }
      
+     
+    public SecretKeySpec generateKey(String password) throws NoSuchAlgorithmException {
+        
+         // Get the Key
+        byte[] key = password.getBytes();
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        key = sha.digest(key);
+        key = Arrays.copyOf(key, 16); // use only first 128 bit
+
+        return new SecretKeySpec(key, AES);
+    }  
     
 }

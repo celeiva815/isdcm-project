@@ -7,6 +7,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -72,25 +73,34 @@ public class EncryptVideo extends HttpServlet {
         VideoEncrypter encrypter = VideoEncrypter.getInstance();
 
         //Obtenemos los parámetros del JSP
-        String encryptation = request.getParameter("encryptation");
+        String encryptation = request.getParameter("encryptation");        
+        String password = request.getParameter("password");
         Part filePart = request.getPart("video");
         
         //obtenemos el contenido del archivo subido 
         //String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         InputStream fileContent = filePart.getInputStream();
-        String content = IOUtils.toString(fileContent); 
+        
+        byte[] content = IOUtils.toByteArray(fileContent); 
         
         if (encryptation.equals("encrypt")) {
             
-            EncryptedVideoString videoString = encrypter.encryptString(content);
-            
-            try (PrintWriter out = response.getWriter()) {
-                out.println(videoString.getEncrypted());
+            byte[] videoEncrypted = encrypter.encryptBytes(content, password);
+        
+        try (OutputStream out = response.getOutputStream()) {
+                out.write(videoEncrypted);
+                out.flush();
             }
             
-        } else 
+        } else {
+            
+            byte[] videoDecrypted = encrypter.desencryptBytes(content, password);
         
-        
+            try (OutputStream out = response.getOutputStream()) {
+                out.write(videoDecrypted);
+                out.flush();
+            }   
+        }
         
         processRequest(request, response);
     }
