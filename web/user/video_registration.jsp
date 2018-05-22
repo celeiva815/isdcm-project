@@ -21,7 +21,7 @@
     <body>
         <h1>Agrega un nuevo video</h1>
         
-        <form name="register_video" action="UploadVideo" method="POST">
+        <form name="register_video" action="UploadVideo" method="POST" enctype="multipart/form-data">
             
             <p>Título:</p>
             <input type="text" name="title"/>
@@ -38,8 +38,10 @@
                 <option value="mp4">MP4</option>
                 <option value="youtube">youtube</option>
             </select>
-            <p>URL:</p>
-            <input type="text" name="url"/>
+            <p>Seleccione el video:</p>
+            <input type="file" name="video"/>
+            <p></p>
+            <input type="checkbox" name="is_encrypted">Encriptar video<br>
             <p></p>
             <input value="Subir Video" type="submit" class="link"/>
             <p class="login-error">${error}</p>

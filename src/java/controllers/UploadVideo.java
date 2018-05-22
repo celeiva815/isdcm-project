@@ -5,18 +5,29 @@
  */
 package controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import models.UserDAO;
 import models.Users;
 import models.VideoDAO;
 import models.Video;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import security.VideoEncrypter;
 import utils.DateHelper;
 
 /**
@@ -24,6 +35,7 @@ import utils.DateHelper;
  * @author Tito
  */
 @WebServlet(name = "UploadVideo", urlPatterns = {"/user/UploadVideo"})
+@MultipartConfig
 public class UploadVideo extends HttpServlet {
     
     
@@ -101,8 +113,15 @@ public class UploadVideo extends HttpServlet {
             int duration = Integer.parseInt(request.getParameter("duration"));
             String description = request.getParameter("description");
             String format = request.getParameter("format");
-            String url = request.getParameter("url");
+            String url = "/VideoManager/videos/"+title+".mp4";
+            Part file = request.getPart("video");
+            boolean isEncrypted = request.getParameter("is_encrypted") != null;
             Users user = (Users) request.getSession().getAttribute("user");
+            
+            
+            if (format.equals("mp4")) {
+                saveVideo(file, title, user.getPassword(), isEncrypted);
+            }
             
             Video video = createVideo(user, title, author, releaseDate, duration, description, format, url);
             Video createdVideo = VideoDAO.getInstance().saveVideo(video);
@@ -144,4 +163,30 @@ public class UploadVideo extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-}
+    
+    private void saveVideo(Part multipart, String filename, String key, boolean isEncrypted) {
+        
+        String relativeWebPath = "/videos";
+        String absoluteFilePath = getServletContext().getRealPath(relativeWebPath);
+        File file = new File(absoluteFilePath, filename+".mp4");
+        
+        try {
+            
+            InputStream input = multipart.getInputStream();
+            
+            if (isEncrypted) {
+                byte[] encrypted = VideoEncrypter.getInstance().encryptBytes(IOUtils.toByteArray(input), key);
+                FileUtils.writeByteArrayToFile(file, encrypted);    
+                
+            } else {
+                Files.copy(input, file.toPath());
+            }
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(UploadVideo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+} 
